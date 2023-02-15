@@ -4,7 +4,7 @@ In this tutorial, I will show you how to program a vectorial 2D platform game fr
 
 The prerequisites for this tutorial are C/C++ knowledge and high school level math. The public project only targets Windows, but I made a Wasm version that I [put up on a website](https://pered.itch.io/platformer-tutorial-demo). 
 
-TLDR: [See the central function in the source code](https://github.com/Pere001/2d-platformer-tutorial/blob/main/src/main.cpp#L717). [Play a web version of the final demo](https://pered.itch.io/platformer-tutorial-demo).
+TLDR: [See the central function in the source code](https://github.com/Pere001/2d-platformer-tutorial-2023/blob/main/src/main.cpp#L717). [Play a web version of the final demo](https://pered.itch.io/platformer-tutorial-demo).
 
 __Table of Contents__
 
@@ -333,7 +333,7 @@ I kept this code simple because we will expand upon it later.
 - After moving the circle we will want to compute the collision normals if it collided.
 - We will add small perpendicular shifts to facilitate moving tangent to edges. This solves the problem of entities getting stuck when sliding along edges. Because of precision issues, if you move a shape along an edge, it will find collision at some positions and not others.
 
-    Our solution shifts the entity by a subpixel amount perpendicular to its speed when a collision is found. If the shifted position doesn't collide, we will move there and count that as a non-collision (so, the next step will be forward rather than backward). You can see the implementation of this in [the final version of this function](https://github.com/Pere001/2d-platformer-tutorial/blob/main/src/main.cpp#L574).
+    Our solution shifts the entity by a subpixel amount perpendicular to its speed when a collision is found. If the shifted position doesn't collide, we will move there and count that as a non-collision (so, the next step will be forward rather than backward). You can see the implementation of this in [the final version of this function](https://github.com/Pere001/2d-platformer-tutorial-2023/blob/main/src/main.cpp#L574).
 - There will be an equivalent function for the rectangle, `MoveRectangle()`.
 - To avoid tunnelling (fast entities going through thin walls) we could have a maximum step length by adding an outer loop.
 
@@ -379,7 +379,7 @@ We want to know how much time it will take to travel the distance `d` along the 
 
 Note that `n` is not really taken from the edge's normal. To find it, you compute the direction from the closest point on the edge, to the center of the circle. This allows us to handle the cases where the circle collides a pointy vertex, using exactly the same code as when it collides the surface of an edge.
 
-Here’s the code. Imagine it’s inside the previous `MoveCircle()` function, after the loop. `walls` is an array of all existing walls, sized by `numWalls`. Imagine we then return the `bestNormal` along with the new position and whether it collided. You can also see [the whole function on GitHub](https://github.com/Pere001/2d-platformer-tutorial/blob/main/src/main.cpp#L574).
+Here’s the code. Imagine it’s inside the previous `MoveCircle()` function, after the loop. `walls` is an array of all existing walls, sized by `numWalls`. Imagine we then return the `bestNormal` along with the new position and whether it collided. You can also see [the whole function on GitHub](https://github.com/Pere001/2d-platformer-tutorial-2023/blob/main/src/main.cpp#L574).
 ```c++
 v2 bestNormal = -Normalize(speed); // Default value in case we don't find any.
 float bestTime = MAX_FLOAT; // Lowest time until collision, to find the edge that would collide first.
@@ -451,7 +451,7 @@ For the glitch to arise now, a rectangle would have to jump into a wall that con
 
 The equality check for whether there's a tie will be done with an epsilon (i.e. check that the two values are __almost__ the same), since the two values will be computed by different routes, so even if geometrically they should be the same, they might be slightly different.
 
-That's all we need to do to find the correct normal. Here's the code (this goes at the end of [`MoveRectangle()`](https://github.com/Pere001/2d-platformer-tutorial/blob/main/src/main.cpp#L717)):
+That's all we need to do to find the correct normal. Here's the code (this goes at the end of [`MoveRectangle()`](https://github.com/Pere001/2d-platformer-tutorial-2023/blob/main/src/main.cpp#L717)):
 
 ```c++
 v2 newR0 = newPos - halfDim;
