@@ -750,7 +750,6 @@ v2 MoveRectangle(v2 pos, v2 halfDim, v2 speed, bool *outCollided, v2 *outCollisi
             if (RectangleWallCollision(p - halfDim, p + halfDim, wll)){
                 if (alreadyShifted){ // Accept the collision
                     collision = true;
-                    lastCollisionPos = p;
                     firstCollidingWallIndex = i;
                 }else{ // Try to shift
                     // "Shifting" means we'll check again for collision after applying a tiny offset in both directions
@@ -778,7 +777,6 @@ v2 MoveRectangle(v2 pos, v2 halfDim, v2 speed, bool *outCollided, v2 *outCollisi
                     
                     if (shiftFailed[0] & shiftFailed[1]){ // Both shifts were unsuccessful
                         collision = true;
-                        lastCollisionPos = p;
                         firstCollidingWallIndex = i;
                     }else{
                         // One of the shifts is a free position.
@@ -800,6 +798,7 @@ v2 MoveRectangle(v2 pos, v2 halfDim, v2 speed, bool *outCollided, v2 *outCollisi
         if (collision){
             speedFactor -= stepSize;
             collided = true;
+            lastCollisionPos = p;
         }else{
             speedFactor += stepSize;
             newPos = p;
