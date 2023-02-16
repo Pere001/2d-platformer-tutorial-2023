@@ -1332,7 +1332,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE prevInstance, PSTR cmdLine, int
                     v2 prevSpeed = gameState.rectSpeed;
                     gameState.rectSpeed = gameState.rectSpeed - Dot(gameState.rectSpeed, collisionNormal)*collisionNormal;
 
-                    if (Abs(Dot(collisionNormal, V2(0, 1))) > .8f) // The edge is very horizontal
+                    if (Abs(collisionNormal.y) > .8f) // The edge is very horizontal
                         if (Abs(Dot(Normalize(prevSpeed), collisionNormal)) > .5f) // and we're going quite perpendicular to the edge
                             break; // Don't slide.
 
